@@ -62,7 +62,7 @@ body, html {
 
  #videoInfo {
     width: 100%;
-    text-align: center;
+    text-align: left;
 }
 
 
@@ -271,10 +271,10 @@ body, html {
       </iframe>
     </div>
     <div class="w3-right">
-      <p class="w3-wide w3-right"><i class="fa fa-camera"></i>Statistics</p>
+      <p class="w3-wide w3-dark-grey w3-large w3-right">Statistics</p>
       <table id="videoInfo">
         <tr>
-            <th>Video Title</th>
+            <th><i class="fa fa-camera"></i> Video Title</th>
             <th>View Count</th>
         </tr>
       </table>  
@@ -345,7 +345,7 @@ $.getJSON(apiUrl, function(data) {
         // Fetch the video details to get the view count
         $.getJSON(videoUrl, function(videoData) {
             var viewCount = videoData.items[0].statistics.viewCount;
-            $('#videoInfo').append("<tr><td style= >" + videoTitle + "</td><td>" + viewCount + "</td></tr>");
+            $('#videoInfo').append("<tr><td style= >" + videoTitle + "</td><td style=\"text-align: center;\">" + viewCount + "</td></tr>");
         });
     });
 });
