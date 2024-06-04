@@ -61,9 +61,10 @@ body, html {
  }
 
  #videoInfo {
-    font-family:initial;
+    font-family: "Raleway", sans-serif;
     width: 100%;
     text-align: left;
+    font-size: large;
 }
 
 
@@ -336,6 +337,7 @@ var apiUrl = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,c
 // Use jQuery's getJSON function to fetch the data
 $.getJSON(apiUrl, function(data) {
     var items = data.items;
+    var ID = 0;
     items.forEach(function(item) {
         var videoId = item.contentDetails.videoId;
         var videoTitle = item.snippet.title;
@@ -346,7 +348,7 @@ $.getJSON(apiUrl, function(data) {
         // Fetch the video details to get the view count
         $.getJSON(videoUrl, function(videoData) {
             var viewCount = videoData.items[0].statistics.viewCount;
-            $('#videoInfo').append("<tr><td style= >" + videoTitle + "</td><td style=\"text-align: center;\">" + viewCount + "</td></tr>");
+            $('#videoInfo').append("<tr><td><a target=_blank href=https://www.youtube.com/watch?v=" + videoId+ ">"+ ++ID + ". " + videoTitle + "</td><td style=\"text-align: center;\">" + viewCount + "</td></tr>");
         });
     });
 });
