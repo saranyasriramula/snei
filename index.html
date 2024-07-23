@@ -833,7 +833,7 @@ function w3_close() {
 
 
 // Replace with your own YouTube video IDs
-var playlistIds = ["PLu0Wd7XD32cLMXOTy31uD6qxpyUZk8MUw", "PLu0Wd7XD32cKl8-DGW_E4BWanGSBa8gsy", "PLqgZEQsU_8E0l1P9bKR6yKOKPMpoJ_tLR"];
+var playlistIds = ["PLu0Wd7XD32cLMXOTy31uD6qxpyUZk8MUw", "PLu0Wd7XD32cKl8-DGW_E4BWanGSBa8gsy"];
 
 // Replace with your own YouTube Data API Key
 var apiKey = "AIzaSyCSHjM8bynxK8SAI-gQqwHtpiCvnpSlOTE";
@@ -841,11 +841,10 @@ var apiKey = "AIzaSyCSHjM8bynxK8SAI-gQqwHtpiCvnpSlOTE";
 playlistIds.forEach(function(playlistId) {
     // Construct the API URL to get the video details
     var apiUrl = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&maxResults=50&playlistId=" + playlistId + "&key=" + apiKey;
-
+    var ID = 0;
     // Use jQuery's getJSON function to fetch the data
     $.getJSON(apiUrl, function(data) {
         var items = data.items;
-        var ID = 0;
         items.forEach(function(item) {
             var videoId = item.contentDetails.videoId;
             var videoTitle = item.snippet.title;
