@@ -693,6 +693,18 @@ body, html {
         allowfullscreen>
       </iframe>
     </div>
+    <div>
+      <br><br>
+      <h3 style="text-align: center;">Explore other Videos </h3><br>
+      <!-- API Key - AIzaSyCSHjM8bynxK8SAI-gQqwHtpiCvnpSlOTE -->
+      <iframe width="100%" height="480" src="https://www.youtube.com/embed/videoseries?si=kJ-BG5FZ0dxSHrrz&amp;list=PLqgZEQsU_8E0l1P9bKR6yKOKPMpoJ_tLR"
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        referrerpolicy="strict-origin-when-cross-origin" 
+        allowfullscreen>
+      </iframe>
+    </div>
     <div class="w3-right">
       <table id="videoInfo">
         <tr>
@@ -802,34 +814,36 @@ function w3_close() {
     document.getElementById("mySidebar").style.display = "none";
 }
 
-// Replace with your own YouTube video ID
-var playlistId = "PLu0Wd7XD32cLMXOTy31uD6qxpyUZk8MUw";
+
+// Replace with your own YouTube video IDs
+var playlistIds = ["PLu0Wd7XD32cLMXOTy31uD6qxpyUZk8MUw", "PLu0Wd7XD32cKl8-DGW_E4BWanGSBa8gsy", "PLqgZEQsU_8E0l1P9bKR6yKOKPMpoJ_tLR"];
 
 // Replace with your own YouTube Data API Key
 var apiKey = "AIzaSyCSHjM8bynxK8SAI-gQqwHtpiCvnpSlOTE";
 
-// Construct the API URL to get the video details
-var apiUrl = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&maxResults=50&playlistId=" + playlistId + "&key=" + apiKey;
+playlistIds.forEach(function(playlistId) {
+    // Construct the API URL to get the video details
+    var apiUrl = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&maxResults=50&playlistId=" + playlistId + "&key=" + apiKey;
 
-// Use jQuery's getJSON function to fetch the data
-$.getJSON(apiUrl, function(data) {
-    var items = data.items;
-    var ID = 0;
-    items.forEach(function(item) {
-        var videoId = item.contentDetails.videoId;
-        var videoTitle = item.snippet.title;
+    // Use jQuery's getJSON function to fetch the data
+    $.getJSON(apiUrl, function(data) {
+        var items = data.items;
+        var ID = 0;
+        items.forEach(function(item) {
+            var videoId = item.contentDetails.videoId;
+            var videoTitle = item.snippet.title;
 
-        // Construct the API URL to get the video details
-        var videoUrl = "https://www.googleapis.com/youtube/v3/videos?id=" + videoId + "&key=" + apiKey + "&part=statistics";
+            // Construct the API URL to get the video details
+            var videoUrl = "https://www.googleapis.com/youtube/v3/videos?id=" + videoId + "&key=" + apiKey + "&part=statistics";
 
-        // Fetch the video details to get the view count
-        $.getJSON(videoUrl, function(videoData) {
-            var viewCount = videoData.items[0].statistics.viewCount;
-            $('#videoInfo').append("<tr><td><a target=_blank href=https://www.youtube.com/watch?v=" + videoId+ ">"+ ++ID + ". " + videoTitle + "</td><td style=\"text-align: center;\">" + viewCount + "</td></tr>");
+            // Fetch the video details to get the view count
+            $.getJSON(videoUrl, function(videoData) {
+                var viewCount = videoData.items[0].statistics.viewCount;
+                $('#videoInfo').append("<tr><td><a target=_blank href=https://www.youtube.com/watch?v=" + videoId+ ">"+ ++ID + ". " + videoTitle + "</td><td style=\"text-align: center;\">" + viewCount + "</td></tr>");
+            });
         });
     });
 });
-
 
 </script>
 
