@@ -150,6 +150,14 @@ body, html {
         allowfullscreen>
       </iframe>
     </div>
+    <div class="w3-right">
+      <table id="videoInfo">
+        <tr>
+            <th><i class="fa fa-camera"></i> Video Title</th>
+            <th>View Count</th>
+        </tr>
+      </table>  
+    </div>
   </div>
 </div>
 
@@ -185,6 +193,33 @@ function w3_close() {
     document.getElementById("mySidebar").style.display = "none";
 }
 
+// Replace with your own YouTube video ID
+var playlistId = "PLu0Wd7XD32cKl8-DGW_E4BWanGSBa8gsy";
+
+// Replace with your own YouTube Data API Key
+var apiKey = "AIzaSyCSHjM8bynxK8SAI-gQqwHtpiCvnpSlOTE";
+
+// Construct the API URL to get the video details
+var apiUrl = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&maxResults=50&playlistId=" + playlistId + "&key=" + apiKey;
+
+// Use jQuery's getJSON function to fetch the data
+$.getJSON(apiUrl, function(data) {
+    var items = data.items;
+    var ID = 0;
+    items.forEach(function(item) {
+        var videoId = item.contentDetails.videoId;
+        var videoTitle = item.snippet.title;
+
+        // Construct the API URL to get the video details
+        var videoUrl = "https://www.googleapis.com/youtube/v3/videos?id=" + videoId + "&key=" + apiKey + "&part=statistics";
+
+        // Fetch the video details to get the view count
+        $.getJSON(videoUrl, function(videoData) {
+            var viewCount = videoData.items[0].statistics.viewCount;
+            $('#videoInfo').append("<tr><td><a target=_blank href=https://www.youtube.com/watch?v=" + videoId+ ">"+ ++ID + ". " + videoTitle + "</td><td style=\"text-align: center;\">" + viewCount + "</td></tr>");
+        });
+    });
+});
 
 </script>
 
